@@ -1,0 +1,61 @@
+type Query {
+  getAllDevelopers: [Developer!]!           
+  getDeveloperById(id: ID!): Developer     
+  getAllGames: [Game!]!                      
+  getGameById(id: ID!): Game              
+  getAllGenres: [Genre!]!                   
+  getGenreById(id: ID!): Genre           
+}
+
+
+  
+type Mutation {
+  createDeveloper(name: String!, surname: String!,email:String!,gameTitle:String!,gameGenre:String!,imageURL:String): Developer!
+  updateDeveloper(id:ID!,name: String, surname: String, gameTitles: [String]):Developer!
+  deleteDeveloper(id:ID!):Developer!,
+  createGame(title:String!,developers:[String!],genreName:String!,imageURL:String):Game!,
+  updateGame(id:ID!,developers:[String!],imageURL:String):Game!
+  deleteGame(id:ID!):Game!,
+  signup(email: String!, password: String!, name: String!): AuthPayload
+  login(email: String!, password: String!): AuthPayload
+
+}
+
+
+type AuthPayload {
+  token: String
+  user: User
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  developers:[Developer!]!
+}
+
+
+type Developer{
+id:ID!
+name:String!
+surname:String!
+userEmail:String!,
+games:[Game!]!
+}
+
+type Game{
+id:ID!
+title:String!
+imageURL:String
+description:String!
+developers:[Developer!]!
+genres:[Genre!]!
+
+}
+
+type Genre
+{
+id:ID!
+name:String!
+games:[Game!]!
+}
