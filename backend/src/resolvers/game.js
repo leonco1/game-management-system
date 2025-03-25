@@ -30,7 +30,7 @@ const gameCrud=
     async getGameById(id)
     {
         id=Number.parseInt(id)
-        return  await prisma.game.findUnique({where:{id},include:{genres:true}})
+        return  await prisma.game.findUnique({where:{id},include:{developers:true,genres:true}})
     },
     async createGame(parent,args,context,info)
     {
@@ -65,8 +65,9 @@ const gameCrud=
         const id=Number.parseInt(args.id)
         const developerIds=await getDeveloperIds(args.developers)
         const imageURL= args.imageURL
+        const description=args.description
         const updatedGame=await prisma.game.update(
-            {where:{ id},
+            {where:{id},
             data:
             {
                 imageURL,
