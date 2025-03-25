@@ -19,7 +19,7 @@ model Developer {
   name    String              
   surname String
   user    User              @relation(fields:[userEmail],references: [email])
-  userEmail String              @unique
+  userEmail String              
   games   Game[]
 }
 
@@ -41,6 +41,6 @@ model User{
   id    Int      @id @default(autoincrement())
   name  String   
   email String    @unique
-  developer Developer?
+  developer Developer[]
   password String 
 }  
