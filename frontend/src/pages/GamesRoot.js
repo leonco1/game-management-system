@@ -5,9 +5,7 @@ export default function GamesPageLayout()
     return(
         <>
         <GameNavigation/>
-        <main>
             <Outlet/>
-        </main>
         </>
         )
 }

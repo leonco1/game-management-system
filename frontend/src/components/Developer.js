@@ -1,6 +1,5 @@
 
 import GamesListDeveloper from "./GamesListDeveloper";
-import GamesList from "./GamesListDeveloper";
 export default function Developer({ developer }) {
   const games=developer.games
   console.log(games)

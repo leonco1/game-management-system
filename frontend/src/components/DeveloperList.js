@@ -1,4 +1,3 @@
-import { useQuery, gql } from '@apollo/client';
 import Developer from './Developer.js';
 
 

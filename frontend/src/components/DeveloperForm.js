@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import { Form } from 'react-router-dom';
 import { useState } from 'react';
 import { useMutation,gql } from '@apollo/client';
 const CREATE_NEW_DEVELOPER_MUTATION=gql`
@@ -22,7 +21,7 @@ mutation createDeveloper($name: String!, $surname: String!, $userEmail: String!,
 
 
 export default function DeveloperForm() {
-const [createDeveloper, { data: mutationData, error }] = useMutation(CREATE_NEW_DEVELOPER_MUTATION);
+const [createDeveloper] = useMutation(CREATE_NEW_DEVELOPER_MUTATION);
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [game, setGame] = useState({

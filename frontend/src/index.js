@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './tailwind.css' 
-import reportWebVitals from './reportWebVitals';
  import {ApolloProvider,ApolloClient,createHttpLink,InMemoryCache, createQueryPreloader} from '@apollo/client'
 import { AUTH_TOKEN } from './utils/constants';
 import { setContext } from '@apollo/client/link/context';
+import PreloadQuery from './PreloadQuery.js';
 
 const httpLink= createHttpLink({
   uri:'http://localhost:4000'
@@ -26,19 +26,16 @@ const client =new ApolloClient({
   cache: new InMemoryCache(),
   
 })
-const preloadQuery=createQueryPreloader(client)
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
  <ApolloProvider 
  client={client}
  >
+  <PreloadQuery>
   <App/>
+  </PreloadQuery>
  </ApolloProvider>
 );
 
-export default preloadQuery
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

@@ -17,7 +17,7 @@ query{
 
 export default function GamesPage()
 {
-const {data,loading,error}=useQuery(GET_ALL_GAMES_QUERY)
+const {data,loading}=useQuery(GET_ALL_GAMES_QUERY)
 if(loading)return(<p>Loading</p>)
 return <GamesList  games={data.getAllGames}>
 </GamesList>

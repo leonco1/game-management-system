@@ -27,7 +27,7 @@ query getAllDevelopers
 
 export default function DevelopersPage()
 {
-    const {data,loading,error}= useQuery(DEVELOPER_QUERY)
+    const {data,loading}= useQuery(DEVELOPER_QUERY)
     if(loading)return <p>Loading</p>
     return <DeveloperList developers={data.getAllDevelopers}/>
 
