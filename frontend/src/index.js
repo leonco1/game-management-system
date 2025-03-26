@@ -32,9 +32,7 @@ root.render(
  <ApolloProvider 
  client={client}
  >
-  <PreloadQuery>
   <App/>
-  </PreloadQuery>
  </ApolloProvider>
 );
 
