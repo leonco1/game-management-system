@@ -13,8 +13,6 @@ import { Suspense } from 'react';
 import GameDetailsPage, {loader as gameDetailsLoader} from './pages/GameDetails.js';
 import DeleteGamePage from './pages/DeleteGame.js';
 
-
-
 const router = createBrowserRouter([
   {
     path: '/',

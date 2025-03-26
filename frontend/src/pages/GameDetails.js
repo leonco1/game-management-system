@@ -1,7 +1,8 @@
-import { gql} from "@apollo/client"
+import { createQueryPreloader, gql} from "@apollo/client"
 import Game from "../components/Game"
 import { useLoaderData } from "react-router";
 import { useReadQuery } from "@apollo/client";
+import { getApolloClient } from "../utils/apolloClient";
 
 const GET_GAME_BY_ID_QUERY=gql`query getGameById($id:ID!)
 {
@@ -17,7 +18,8 @@ const GET_GAME_BY_ID_QUERY=gql`query getGameById($id:ID!)
     }
 }
 `
-
+const client=getApolloClient()
+const preloadQuery=createQueryPreloader(client)
 export default function GameDetailsPage()
 {
     const queryRef = useLoaderData();
