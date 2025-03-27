@@ -1,8 +1,10 @@
 import { useRouteLoaderData } from "react-router";
-import Game from "../components/Game";
+import { useReadQuery } from "@apollo/client";
+import GameForm from "../components/GameForm";
 export default function EditGamePage()
 {
-    const data=useRouteLoaderData("game-details")
-    console.log("this is edit "+ data)
-    return <Game game={data.getGameById}/>
+    const queryRef = useRouteLoaderData("game-details");
+    const { data } = useReadQuery(queryRef);
+
+    return <GameForm game={data.getGameById}/>
 }

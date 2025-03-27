@@ -28,7 +28,7 @@ export const getApolloClient = () => {
     
   })
   return apolloClient;
-
+  
   };
 
 

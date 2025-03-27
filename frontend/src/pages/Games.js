@@ -1,24 +1,9 @@
-import { useQuery,gql} from "@apollo/client"
-import GamesList from "../components/GamesList"
-const GET_ALL_GAMES_QUERY=gql`
+import { useQuery } from "@apollo/client";
+import GamesList from "../components/GamesList";
+import { GET_ALL_GAMES_QUERY } from "../utils/queries";
+export default function GamesPage() {
+  const { data, loading } = useQuery(GET_ALL_GAMES_QUERY);
+  if (loading) return <p>Loading</p>;
 
-query{
-    getAllGames{
-        id
-        title
-        imageURL
-        genres{
-            id
-            name
-        }
-    }
-}
-`
-
-export default function GamesPage()
-{
-const {data,loading}=useQuery(GET_ALL_GAMES_QUERY)
-if(loading)return(<p>Loading</p>)
-return <GamesList  games={data.getAllGames}>
-</GamesList>
+  return <GamesList games={data.getAllGames}></GamesList>;
 }

@@ -1,35 +1,9 @@
-import { useQuery,gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import DeveloperList from "../components/DeveloperList";
+import { GET_ALL_DEVELOPERS_QUERY } from "../utils/queries";
 
-const DEVELOPER_QUERY=gql`
-query getAllDevelopers
-{
-  getAllDevelopers
-  {
-    id
-    name
-    surname
-    userEmail
-    games{
-      id
-      title
-      imageURL
-      genres{
-        id
-        name
-      }
-
-    }
-    
-  }
+export default function DevelopersPage() {
+  const { data, loading } = useQuery(GET_ALL_DEVELOPERS_QUERY);
+  if (loading) return <p>Loading</p>;
+  return <DeveloperList developers={data.getAllDevelopers} />;
 }
-`
-
-export default function DevelopersPage()
-{
-    const {data,loading}= useQuery(DEVELOPER_QUERY)
-    if(loading)return <p>Loading</p>
-    return <DeveloperList developers={data.getAllDevelopers}/>
-
-}
-

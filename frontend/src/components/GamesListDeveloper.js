@@ -2,35 +2,37 @@ import { NavLink } from "react-router-dom";
 import { useState } from "react";
 
 export default function GamesListDeveloper({ games }) {
-  const [hoveredGame, setHoveredGame] = useState(null);
+  const [selectedGame, setSelectedGame] = useState(null);
 
-  function handleHoveredGame(imageURL) {
-    setHoveredGame(imageURL);
+  function handleGameClick(game) {
+    setSelectedGame((prev) =>
+      prev?.id === game.id ? null : { id: game.id, imageURL: game.imageURL }
+    );
   }
 
   return (
-    <div className="relative">
+    <div className="h-full relative">
       <ul className="mt-4 space-y-2">
         {games.map((game) => (
-          <NavLink
+          <div
             key={game.id}
-            to={`/games/${game.id}`}
-            className="block p-2 rounded-md hover:bg-gray-800 transition duration-300"
-            onMouseEnter={() => handleHoveredGame(game.imageURL)}
-            onMouseLeave={() => setHoveredGame(null)}
+            className="p-2 rounded-md hover:bg-gray-800 transition duration-300 cursor-pointer"
+            onClick={() => handleGameClick(game)}
           >
             <p className="text-gray-400">{game.title}</p>
-          </NavLink>
+          </div>
         ))}
       </ul>
 
-      {hoveredGame && (
-        <div className="  mt-4 w-48 h-48 bg-gray-900 p-2 rounded-lg shadow-lg">
-          <img
-            src={hoveredGame}
-            className="w-full h-full object-cover rounded-lg"
-            alt="Game Preview"
-          />
+      {selectedGame && (
+        <div className="absolute inset-y-0 m-2 left-20 w-44 h-44  z-auto bg-gray-900 px-1 rounded-lg  shadow-lg">
+          <NavLink to={`/games/:${selectedGame.id}`}>
+            <img
+              src={selectedGame.imageURL}
+              className="w-full h-full object-cover rounded-lg"
+              alt="Game Preview"
+            />
+          </NavLink>
         </div>
       )}
     </div>

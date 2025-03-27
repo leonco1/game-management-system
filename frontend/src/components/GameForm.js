@@ -1,58 +1,32 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Form, useNavigate } from "react-router";
-import { gql, useMutation, useQuery } from "@apollo/client";
-
-const CREATE_GAME_MUTATION = gql`
-  mutation createGame(
-    $title: String!
-    $developers: [String!]
-    $description: String!
-    $genreName: String!
-    $imageURL: String!
-  ) {
-    createGame(
-      title: $title
-      developers: $developers
-      genreName: $genreName
-      description: $description
-      imageURL: $imageURL
-    ) {
-      title
-      developers {
-        name
-      }
-      genres {
-        name
-      }
-    }
-  }
-`;
-
-const DEVELOPER_EMAIL_QUERY = gql`
-  query {
-    getAllDevelopers {
-      userEmail
-    }
-  }
-`;
+import { useMutation, useQuery } from "@apollo/client";
+import {
+  CREATE_GAME_MUTATION,
+  UPDATE_GAME_MUTATION,
+} from "../utils/mutations.js";
+import {
+  DEVELOPER_EMAIL_QUERY,
+  GET_ALL_GAMES_QUERY,
+} from "../utils/queries.js";
 
 export default function GameForm({ game }) {
-    console.log(game)
   const navigate = useNavigate();
-  const [developers, setDevelopers] = useState([]);
+  const genre = game?.genres.map((genre) => genre.name).join(" ") || [];
+  const developersForGame =
+    game?.developers.map((game) => game.userEmail) || [];
+  const [developers, setDevelopers] = useState(developersForGame);
   const [selectedDeveloper, setSelectedDeveloper] = useState("");
+
   const [formState, setFormState] = useState({
     title: game?.title || "",
-    genreName: game?.genreName || "",
-    imageURL: game?.imageURL || "",
     description: game?.description || "",
+    genreName: genre,
+    imageURL: game?.imageURL || "",
   });
-
-  const { data} = useQuery(DEVELOPER_EMAIL_QUERY);
-
-  const developerEmails = data?.getAllDevelopers.map((dev) => dev.userEmail) || [];
-//   const gameDevelopersEmails=game?.
-
+  const { data } = useQuery(DEVELOPER_EMAIL_QUERY);
+  const developerEmails =
+    data?.getAllDevelopers.map((dev) => dev.userEmail) || [];
   const [createGame] = useMutation(CREATE_GAME_MUTATION, {
     variables: {
       title: formState.title,
@@ -62,6 +36,17 @@ export default function GameForm({ game }) {
       imageURL: formState.imageURL,
     },
     onCompleted: () => navigate("/games"),
+    refetchQueries: [{ query: GET_ALL_GAMES_QUERY }],
+  });
+  const [updateGame] = useMutation(UPDATE_GAME_MUTATION, {
+    variables: {
+      id: game ? game.id : 0,
+      developers: developers,
+      description: formState.description,
+      imageURL: formState.imageURL,
+    },
+    onCompleted: () => navigate("/games"),
+    refetchQueries: [{ query: GET_ALL_GAMES_QUERY }],
   });
 
   const handleAddDeveloper = () => {
@@ -73,62 +58,83 @@ export default function GameForm({ game }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createGame();
+    game ? updateGame() : createGame();
   };
 
-  useEffect(() => {
-    if (game) {
-      setFormState({
-        title: game.title || "",
-        genreName: game.genreName || "",
-        imageURL: game.imageURL || "",
-        description: game.description || "",
-      });
-    }
-  }, [game]);
+  function cancelHandler() {
+    navigate("..");
+  }
+
+  // useEffect(() => {
+  //   if (game) {
+  //     setFormState({
+  //       title: game.title || "",
+  //       genreName: game.genreName || "",
+  //       imageURL: game.imageURL || "",
+  //       description: game.description || "",
+  //     });
+  //   }
+  // }, [game]);
 
   return (
-    <div className="p-6 bg-gray-900 min-h-screen rounded-lg shadow-lg transition-transform transform hover:scale-105">
-      <Form onSubmit={handleSubmit} className="max-w-lg mx-auto p-6 bg-gray-700 my-5 shadow-lg rounded-lg space-y-4">
+    <div className="p-6 bg-gray-900 min-h-screen  shadow-lg transition-transform transform hover:scale-105">
+      <Form
+        onSubmit={handleSubmit}
+        className="max-w-lg mx-auto p-6 bg-gray-700 my-5 shadow-lg rounded-lg space-y-4"
+      >
         <p className="flex flex-col">
-          <label htmlFor="title" className="font-semibold">Title</label>
+          <label htmlFor="title" className="font-semibold">
+            Title
+          </label>
           <input
             id="title"
             className="rounded-md"
             type="text"
             value={formState.title}
-            onChange={(e) => setFormState({ ...formState, title: e.target.value })}
+            onChange={(e) =>
+              setFormState({ ...formState, title: e.target.value })
+            }
             disabled={game ? true : false}
             required
           />
         </p>
 
         <p className="flex flex-col">
-          <label htmlFor="imageURL" className="font-semibold">Image URL</label>
+          <label htmlFor="imageURL" className="font-semibold">
+            Image URL
+          </label>
           <input
             id="imageURL"
             className="rounded-md"
             type="text"
             value={formState.imageURL}
-            onChange={(e) => setFormState({ ...formState, imageURL: e.target.value })}
+            onChange={(e) =>
+              setFormState({ ...formState, imageURL: e.target.value })
+            }
             required
           />
         </p>
 
         <p className="flex flex-col">
-          <label htmlFor="description" className="font-semibold">Description</label>
+          <label htmlFor="description" className="font-semibold">
+            Description
+          </label>
           <input
             id="description"
             className="rounded-md"
             type="text"
             value={formState.description}
-            onChange={(e) => setFormState({ ...formState, description: e.target.value })}
+            onChange={(e) =>
+              setFormState({ ...formState, description: e.target.value })
+            }
             required
           />
         </p>
 
         <div className="flex flex-col">
-          <label htmlFor="developerEmail" className="font-semibold">Developer Emails</label>
+          <label htmlFor="developerEmail" className="font-semibold">
+            Developer Emails
+          </label>
           <div className="flex items-center">
             <select
               id="developerEmail"
@@ -138,7 +144,9 @@ export default function GameForm({ game }) {
             >
               <option value="">Select a developer</option>
               {developerEmails.map((email, index) => (
-                <option key={index} value={email}>{email}</option>
+                <option key={index} value={email}>
+                  {email}
+                </option>
               ))}
             </select>
             <button
@@ -157,7 +165,9 @@ export default function GameForm({ game }) {
               {email}
               <button
                 type="button"
-                onClick={() => setDevelopers(developers.filter((e) => e !== email))}
+                onClick={() =>
+                  setDevelopers(developers.filter((e) => e !== email))
+                }
                 className="ml-2 text-red-500"
               >
                 Remove
@@ -167,23 +177,35 @@ export default function GameForm({ game }) {
         </ul>
 
         <p className="flex flex-col">
-          <label htmlFor="genreName" className="font-semibold">Genre</label>
+          <label htmlFor="genreName" className="font-semibold">
+            Genre
+          </label>
           <input
             id="genreName"
             className="rounded-md"
             type="text"
             value={formState.genreName}
-            onChange={(e) => setFormState({ ...formState, genreName: e.target.value })}
+            disabled={game ? true : false}
+            onChange={(e) =>
+              setFormState({ ...formState, genreName: e.target.value })
+            }
             required
           />
         </p>
 
         <div className="flex justify-end space-x-4">
+        <button
+            type="button"
+            onClick={cancelHandler}
+            className="px-4 py-2 bg-gray-500 hover:bg-gray-600 rounded"
+          >
+            Cancel
+          </button>
           <button
             type="submit"
             className="px-4 py-2 bg-gray-900 text-white hover:bg-gray-900 rounded"
           >
-            Create Game
+            {game ? "Edit Game" : "Create Game"}
           </button>
         </div>
       </Form>

@@ -11,7 +11,7 @@ import Login from './components/Login.js';
 import GameForm from './components/GameForm.js';
 import { Suspense } from 'react';
 import GameDetailsPage, {loader as gameDetailsLoader} from './pages/GameDetails.js';
-import DeleteGamePage from './pages/DeleteGame.js';
+
 
 const router = createBrowserRouter([
   {
@@ -36,14 +36,14 @@ const router = createBrowserRouter([
           { index: true, element: <GamesPage /> },
           {
             path: ':gameId',
-            id:"game-details",
-            element: <GameDetailsPage/>,
+            id: 'game-details',
             loader: gameDetailsLoader,
             children: [
-            {
-              index:true,element:<DeleteGamePage/>
-            },
-            {path: 'edit', element: <EditGamePage /> },
+              {
+                index: true,
+                element: <GameDetailsPage />,
+              },
+              { path: 'edit', element: <EditGamePage /> },
             ],
           },
           { path: 'new', element: <GameForm /> },
@@ -60,8 +60,8 @@ function App() {
  return (
  <Suspense fallback={"loading"}>
  <RouterProvider   router={router}/>
- 
- </Suspense>)
+ </Suspense>
+ )
 
 }
 
