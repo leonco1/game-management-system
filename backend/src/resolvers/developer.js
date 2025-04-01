@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import prisma from "./prismaClient/prisma.js";
 import User from "./user.js";
 

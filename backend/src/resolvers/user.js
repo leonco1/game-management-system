@@ -2,19 +2,34 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import prisma from './prismaClient/prisma.js';
 import { APP_SECRET,getUserId } from "../utils.js";
+import { error } from 'console';
 const User={
-    async  signup(parent,args,context,info) {
-            
-            const password=await bcrypt.hash(args.password,10)
-            console.log(args)
-            const user = await context.prisma.user.create({ data: { ...args, password } })
-            const token=jwt.sign({userId:user.id},APP_SECRET)
-            return {token,user}
-        
-    },
+    async signup(parent, args, context, info) {
+        if (!args.email || !args.password || !args.name) {
+            throw new Error("Missing required fields: email, password, or name");
+        }
+   
+        try {
+            const password = await bcrypt.hash(args.password, 10);
+            const user = await prisma.user.create({
+                data: {
+                    email: args.email,
+                    name: args.name,
+                    password
+                }
+            });
+   
+            const token = jwt.sign({ userId: user.id }, APP_SECRET);
+            return { token, user }; // Returning both token and user object
+   
+        } catch (error) {
+            console.error("Error creating user:", error); // Log the error for debugging
+            throw new Error("Error creating user"); // Return a user-friendly message
+        }
+    },   
     async login (parent,args,context,info)
     {
-        const user = await context.prisma.user.findUnique({ where: { email: args.email } })
+        const user = await prisma.user.findUnique({ where: { email: args.email } })
         if(!user)
         {
             throw new Error('No such user found')

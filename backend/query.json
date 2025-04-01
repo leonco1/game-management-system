@@ -1,0 +1,20 @@
+{
+    "version": "2",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "isBase64Encoded": false,
+    "rawQueryString": "",
+    "requestContext": {
+      "http": {
+        "method": "POST"
+      }
+    },
+    "rawPath": "/",
+    "routeKey": "/",
+  
+      "body": "{\"operationName\": null, \"variables\": {\"email\": \"leonid20021@gmail.com\", \"password\": \"123456\", \"name\": \"Leonid Trajkoski\"}, \"query\": \"mutation($email: String!, $password: String!, $name: String!) { signup(email: $email, password: $password, name: $name) { token } }\"}"
+    
+        
+   
+  }

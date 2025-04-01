@@ -11,21 +11,26 @@ export default function GamesListDeveloper({ games }) {
   }
 
   return (
-    <div className="h-full relative">
+    <div className="h-full border-2 rounded-lg border-gray-900  overflow-visible relative  ">
       <ul className="mt-4 space-y-2">
         {games.map((game) => (
           <div
             key={game.id}
-            className="p-2 rounded-md hover:bg-gray-800 transition duration-300 cursor-pointer"
+            className=" p-3 static rounded-md hover:bg-gray-800 transition duration-300 cursor-pointer"
             onClick={() => handleGameClick(game)}
           >
-            <p className="text-gray-400">{game.title}</p>
+            
+            <span className="text-gray-400">
+            <p >{game.title}</p>
+            </span>
+           
           </div>
+          
         ))}
-      </ul>
 
+      </ul>
       {selectedGame && (
-        <div className="absolute inset-y-0 m-2 left-20 w-44 h-44  z-auto bg-gray-900 px-1 rounded-lg  shadow-lg">
+        <div className=" relative m-2 w-44 h-44  z-50 bg-gray-900 px-1 rounded-lg  shadow-lg">
           <NavLink to={`/games/:${selectedGame.id}`}>
             <img
               src={selectedGame.imageURL}
@@ -35,6 +40,7 @@ export default function GamesListDeveloper({ games }) {
           </NavLink>
         </div>
       )}
+      
     </div>
   );
 }

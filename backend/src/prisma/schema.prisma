@@ -5,42 +5,45 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["driverAdapters"]
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-1.0.x"]
+  output   = "../src/generated/client"
+  
 }
 
 datasource db {
-  provider = "sqlite"
-  url = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Developer {
-  id      Int                @id @default(autoincrement())
-  name    String              
-  surname String
-  user    User              @relation(fields:[userEmail],references: [email])
-  userEmail String              
-  games   Game[]
+  id        Int    @id @default(autoincrement())
+  name      String
+  surname   String
+  user      User   @relation(fields: [userEmail], references: [email])
+  userEmail String
+  games     Game[]
 }
 
 model Game {
-  id         Int                @id @default(autoincrement())
-  title       String            @unique
-  imageURL String?
+  id          Int         @id @default(autoincrement())
+  title       String      @unique
+  imageURL    String?
   description String?
-  developers Developer[]
-  genres     Genre[]
+  developers  Developer[]
+  genres      Genre[]
 }
 
 model Genre {
-  id    Int            @id @default(autoincrement())
-  name  String         @unique
+  id    Int    @id @default(autoincrement())
+  name  String @unique
   games Game[]
 }
-model User{
-  id    Int      @id @default(autoincrement())
-  name  String   
-  email String    @unique
+
+model User {
+  id        Int         @id @default(autoincrement())
+  name      String
+  email     String      @unique
   developer Developer[]
-  password String 
-}  
+  password  String
+}

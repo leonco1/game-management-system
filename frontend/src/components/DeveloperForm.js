@@ -58,7 +58,7 @@ export default function DeveloperForm() {
     });
   }
   return (
-    <div className="p-6 bg-gray-900 min-h-screen rounded-lg shadow-lg transition-transform transform hover:scale-105">
+    <div className="p-6 bg-gray-900 min-h-screen  shadow-lg ">
       <form className="max-w-lg mx-auto p-6 bg-gray-700 my-5 shadow-lg rounded-lg space-y-4">
         <p className="flex flex-col">
           <label htmlFor="name" className="font-semibold">

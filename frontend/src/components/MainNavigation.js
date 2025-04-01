@@ -1,6 +1,8 @@
 import { NavLink } from "react-router";
+import { AUTH_TOKEN } from "../utils/constants.js";
 
 export default function Header() {
+  console.log(localStorage.getItem('AUTH_TOKEN'))
   return (
     <div className="bg-black min-w-100% rounded-none text-gray-500 py-4  mx-auto  w-full flex justify-between items-center px-8 shadow-md">
     <header className="min-w-full" >
@@ -54,7 +56,7 @@ export default function Header() {
                     : "hover:text-red-800 transition "
                 }
               >
-                Login
+                {1?"Logout": "Login"}
               </NavLink>
             </li>
           </ul>

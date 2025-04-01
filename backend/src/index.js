@@ -1,4 +1,4 @@
-import { ApolloServer } from 'apollo-server';
+import { ApolloServer } from '@apollo/server';
 import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
@@ -9,6 +9,12 @@ import { getUserId } from './utils.js';
 import developerCrud from './resolvers/developer.js';
 import User from './resolvers/user.js';
 import gameCrud from './resolvers/game.js';
+
+import {
+  startServerAndCreateLambdaHandler,
+  handlers,
+} from '@as-integrations/aws-lambda';
+import { ExecutableDefinitionsRule } from 'graphql';
 
 
 
@@ -44,6 +50,7 @@ const resolvers={
 
   }
 
+ 
 
 const server=new ApolloServer({
   cors:true,
@@ -53,12 +60,16 @@ const server=new ApolloServer({
       return {
         ...req,
         prisma,
-        userId:
-        req && req.headers.authorization
-          ? getUserId(req)
-          : null
+        userId: req?.headers?.authorization ? getUserId(req) : null
+
       }
     }
 })
+export const graphqlHandler = startServerAndCreateLambdaHandler(
+  server,
+  // We will be using the Proxy V2 handler
+  handlers.createAPIGatewayProxyEventV2RequestHandler()
+  , {
+    listen: { port: 4000 },}
 
-server.listen().then(({url})=>console.log(`Server is running on ${url}`))
+);
