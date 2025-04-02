@@ -10,19 +10,37 @@ import EditGamePage from './pages/EditGame.js';
 import Login from './components/Login.js';
 import GameForm from './components/GameForm.js';
 import { Suspense } from 'react';
+import Logout from './components/Logout.js';
 import GameDetailsPage, {loader as gameDetailsLoader} from './pages/GameDetails.js';
+import { AUTH_TOKEN } from './utils/constants.js';
+import ProtectedRoute from './components/ProtectedRoute.js'
+
+import { useState } from 'react';
+
+import { useEffect } from 'react';
 
 
+function App() {
+  const [userToken, setUserToken] = useState(localStorage.getItem(AUTH_TOKEN));
+useEffect(() => {
+  setUserToken(localStorage.getItem(AUTH_TOKEN));
+}, []);
+
+console.log(userToken)
 const router = createBrowserRouter([
   {
+    
     path: '/',
-    element: <DevelopmentRoot />,
+    element:
+        <DevelopmentRoot />,
     children: [
-      { index: true, element: <HomePage /> },
+      { index: true, element: <HomePage />},
+    
       {
         path: 'developers',
         element: (
-            <DevelopersRootLayout />
+          <ProtectedRoute user={userToken}>  <DevelopersRootLayout /></ProtectedRoute>
+          
         ),
         children: [
           { index: true, element: <DevelopersPage /> },
@@ -31,7 +49,8 @@ const router = createBrowserRouter([
       },
       {
         path: 'games',
-        element: <GamesPageLayout />,
+        
+        element: <ProtectedRoute user={userToken}><GamesPageLayout /></ProtectedRoute>,
         children: [
           { index: true, element: <GamesPage /> },
           {
@@ -51,12 +70,12 @@ const router = createBrowserRouter([
         ],
 
       },
-      { path: 'login', element: <Login /> },
+      { path: 'login', element: <Login setUserToken={setUserToken} /> },
+      {path:'logout',element:<Logout setUserToken={setUserToken}/>}
     ],
   },
-]);
+],);
 
-function App() {
  return (
  <Suspense fallback={"loading"}>
  <RouterProvider   router={router}/>

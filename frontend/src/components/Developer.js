@@ -6,9 +6,11 @@ export default function Developer({ developer }) {
       <h1 className="text-xl font-bold text-white">
         {developer.name} {developer.surname}
       </h1>
-      <h2 className="text-gray-400 text-sm">{developer.userEmail}</h2>
+      <h2 className="text-gray-400 text-sm  border-b-red-900 border-opacity-70 border-b-[1px]">{developer.userEmail}</h2>
 
-      <h3 className="text-gray-300 mt-4 font-semibold">Games:</h3>
+    <div className="text-gray-300 mt-4 font-semibold  pb-2  border-gray-900">
+      <h3 >Games:</h3>
+      </div>
       {<GamesListDeveloper games={games} />}
       </>
   );

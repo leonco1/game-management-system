@@ -5,8 +5,9 @@ export default function ComponentNavigation({ navigateTo }) {
     navigateTo.charAt(0).toUpperCase() + navigateTo.slice(1);
     
   return (
-    <div className="bg-gray-900 p-8  flex justify-center">
-              <NavLink
+    <div className="bg-gray-900 p-8  
+  ">
+              <NavLink 
                 to={`/${navigateTo}/new`}
                 className={({ isActive }) =>
                   `px-6 py-2 rounded-md no-underline ${

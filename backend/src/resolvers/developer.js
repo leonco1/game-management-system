@@ -35,6 +35,7 @@ const developerCrud = {
     const gameGenre=args.gameGenre
     const email=args.email
     const imageURL=args.imageURL
+    const description=args.description
     const user=await prisma.user.findUnique({where:{email}, select:{email:true}})
     
     if(!user)

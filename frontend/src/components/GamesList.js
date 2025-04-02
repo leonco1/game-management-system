@@ -6,15 +6,18 @@ import Game from "./Game";
 //     }
 //   }
 // `;
-
+import GameNavigation from "./GameNavigation";
 export default function GamesList({ games }) {
 
   return (
     <div className="min-h-screen bg-gray-900 py-10 ">
       <div className="max-w-7xl mx-auto px-6">
-        <h1 className="text-4xl font-bold text-center text-white ">Games</h1>
+        <div className='flex items-center  border-b-2  border-b-red-900 justify-between'>
+                  <h1 className="text-3xl font-bold text-center  text-white ">Games</h1>
+                  <GameNavigation/>
+                </div>
 
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap gap-4 justify-between">
           {games.map((game) => (
             <div key={game.id} className="p-4 text-center">
               <Game key={game.id} game={game} />

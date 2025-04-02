@@ -25,11 +25,12 @@ const User={
             throw new Error("Invalid Password")
         }
         const token=jwt.sign({userId:user.id},APP_SECRET)
-
+        
         return {
             token,
             user
         }
     }
+    
 };
 export default User

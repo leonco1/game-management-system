@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { gql, useMutation } from "@apollo/client";
 import { AUTH_TOKEN } from "../utils/constants.js";
@@ -19,7 +19,7 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-const Login = () => {
+const Login = ({setUserToken}) => {
   const navigate = useNavigate();
   const [formState, setFormState] = useState({
     login: true,
@@ -35,6 +35,7 @@ const Login = () => {
     },
     onCompleted: ({ login }) => {
       localStorage.setItem(AUTH_TOKEN, login.token);
+        setUserToken(login.token )
       navigate("/");
     },
   });
@@ -47,6 +48,7 @@ const Login = () => {
     },
     onCompleted: ({ signup }) => {
       localStorage.setItem(AUTH_TOKEN, signup.token);
+      setUserToken(signup.token)
       navigate("/");
     },
   });
