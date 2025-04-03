@@ -23,6 +23,7 @@
     "pg": "^8.14.0"
   },
   "prisma": {
-    "schema": "src/prisma/schema.prisma"
+    "schema": "src/prisma/schema.prisma",
+    "seed":"node src/prisma/seed.js"
   }
 }

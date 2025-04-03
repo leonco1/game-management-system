@@ -9,7 +9,7 @@ import { getUserId } from './utils.js';
 import developerCrud from './resolvers/developer.js';
 import User from './resolvers/user.js';
 import gameCrud from './resolvers/game.js';
-
+import genreCrud from './resolvers/genre.js'
 
 
 const resolvers={
@@ -21,9 +21,10 @@ const resolvers={
         getAllGames:gameCrud.getAllGames,
         getGameById:(parent,args,context,info)=>{
           return gameCrud.getGameById(args.id)
-        }
+        },
+        getAllGenres:genreCrud.getAllGenres
         
-     
+        
         // genres:()=>genres,
         // games:()=>games
     },
@@ -37,6 +38,7 @@ const resolvers={
        createGame:(parent,args,context,info)=>gameCrud.createGame(parent,args,context,info),
        updateGame:(parent,args,context,info)=>gameCrud.updateGame(parent,args,context,info),
        deleteGame:(parent,args,context,info)=>gameCrud.deleteGame(args.id),
+       createGenre:(parent,args,context,info)=>genreCrud.createGenre(parent,args,context,info),
       signup:(parent,args,context,info)=>User.signup(parent,args,context,info),
       login:(parent,args,context,info)=>User.login(parent,args,context,info),
         },

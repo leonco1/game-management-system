@@ -16,6 +16,7 @@ type Mutation {
   createGame(title:String!,developers:[String!],description:String!,genreName:String!,imageURL:String):Game!,
   updateGame(id:ID!,developers:[String!],description:String,imageURL:String):Game!
   deleteGame(id:ID!):Game!,
+  createGenre(name:String!):Genre!,
   signup(email: String!, password: String!, name: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
 
