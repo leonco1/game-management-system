@@ -26,7 +26,6 @@ useEffect(() => {
   setUserToken(localStorage.getItem(AUTH_TOKEN));
 }, []);
 
-console.log(userToken)
 const router = createBrowserRouter([
   {
     

@@ -9,9 +9,8 @@ export default function GamesListDeveloper({ games }) {
       prev?.id === game.id ? null : { id: game.id, imageURL: game.imageURL }
     );
   }
-
   return (
-    <div className="h-full border-2 rounded-lg border-gray-900  overflow-visible relative  ">
+    <div className="h-1/2 border-2 rounded-lg border-gray-900 overflow-scroll " >
       <ul className="mt-4 space-y-2">
         {games.map((game) => (
           <div
@@ -30,7 +29,7 @@ export default function GamesListDeveloper({ games }) {
 
       </ul>
       {selectedGame && (
-        <div className=" relative m-2 w-44 h-44  z-50 bg-gray-900 px-1 rounded-lg  shadow-lg">
+        <div className=" absolute left-48 bottom-4 m-4  w-48 h-48 z-50 bg-gray-900 px-1 rounded-lg  shadow-lg">
           <NavLink to={`/games/:${selectedGame.id}`}>
             <img
               src={selectedGame.imageURL}

@@ -11,9 +11,7 @@ export default function ComponentNavigation({ navigateTo }) {
     >
       <NavLink
         to={`/${navigateTo}/new`}
-        className=" px-6 py-2 rounded-md no-underline 
-                    
-                       bg-gray-500 text-xl text-gray-900"
+        className=" px-6 py-2 rounded-md no-underline  bg-gray-500 text-2xl text-gray-900"
       >
         New {capitalisedNavigateTo}
       </NavLink>
