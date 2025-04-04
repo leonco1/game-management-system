@@ -62,14 +62,11 @@ const developerCrud = {
               create: {
                 title: gameTitle, 
                 imageURL,
+                description,
                 genres: {
-                  connectOrCreate: {
-                    where: {
-                      name: gameGenre, 
-                    },
-                    create: {
-                      name: gameGenre, 
-                    },
+                  connect: {
+                    name: gameGenre, 
+                
                   },
                 },
               },

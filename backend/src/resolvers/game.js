@@ -47,13 +47,9 @@ const gameCrud=
             connect: developerIds
             },
             genres:{
-                connectOrCreate:{
-                    where:{
-                        name:genreName
-                    },
-                    create:{
-                        name:genreName
-                    }
+                connect:{
+                    name: gameGenre, 
+
                 }
             }
         }, include:{developers:true,genres:true }})

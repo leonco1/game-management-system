@@ -10,7 +10,7 @@ type Query {
 
   
 type Mutation {
-  createDeveloper(name: String!, surname: String!,email:String!,gameTitle:String!,gameGenre:String!,imageURL:String): Developer!
+  createDeveloper(name: String!, surname: String!,email:String!,gameTitle:String!,description:String!,gameGenre:String!,imageURL:String): Developer!
   updateDeveloper(id:ID!,name: String, surname: String, gameTitles: [String]):Developer!
   deleteDeveloper(id:ID!):Developer!,
   createGame(title:String!,developers:[String!],description:String!,genreName:String!,imageURL:String):Game!,
