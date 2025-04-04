@@ -38,17 +38,17 @@ const gameCrud=
         const genreName=args.genreName
         const developerIds=await getDeveloperIds(args.developers)
         const imageURL= args.imageURL
-        const description=args.description
+        const description=args.description 
         const newGame= await prisma.game.create({data:{
             title,
             imageURL,
             description,
             developers:{
-            connect: developerIds
+            set: developerIds
             },
             genres:{
                 connect:{
-                    name: gameGenre, 
+                    name: genreName, 
 
                 }
             }
