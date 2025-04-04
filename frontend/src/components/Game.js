@@ -12,11 +12,7 @@ export default function Game({ game, isSingle }) {
   const [deleteGame] = useMutation(DELETE_GAME_MUTATION, {
     variables: { id: game.id },
     onCompleted: () => navigate("/games"),
-    update:(cache,_,args)=>{
-      cache.evict({id:args.variables.id})
-      cache.gc()
-    },
-    // refetchQueries: [{ query: GET_ALL_GAMES_QUERY }],
+    refetchQueries: [{ query: GET_ALL_GAMES_QUERY }],
   });
 
   function startDeleteHandler() {
@@ -53,6 +49,8 @@ export default function Game({ game, isSingle }) {
               </span>
             ))}
           </h2>
+            <p className="text-gray-400 text-xl text-center">{game.description}</p>
+
           <div className="flex justify-center gap-4 mt-4">
             <NavLink
               to="edit"

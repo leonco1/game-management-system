@@ -10,11 +10,13 @@ import {
   GET_ALL_GAMES_QUERY,
 } from "../utils/queries.js";
 
+import Select from 'react-select'
 export default function GameForm({ game }) {
   const navigate = useNavigate();
   const genre = game?.genres.map((genre) => genre.name).join(" ") || [];
   const developersForGame =
     game?.developers.map((game) => game.userEmail) || [];
+
   const [developers, setDevelopers] = useState(developersForGame);
   const [selectedDeveloper, setSelectedDeveloper] = useState("");
 
@@ -24,7 +26,7 @@ export default function GameForm({ game }) {
     genreName: genre,
     imageURL: game?.imageURL || "",
   });
-  const { data } = useQuery(DEVELOPER_EMAIL_QUERY);
+  const { data,loading:developerLoading } = useQuery(DEVELOPER_EMAIL_QUERY);
   const developerEmails =
     data?.getAllDevelopers.map((dev) => dev.userEmail) || [];
   const [createGame] = useMutation(CREATE_GAME_MUTATION, {
@@ -65,16 +67,10 @@ export default function GameForm({ game }) {
     navigate("..");
   }
 
-  // useEffect(() => {
-  //   if (game) {
-  //     setFormState({
-  //       title: game.title || "",
-  //       genreName: game.genreName || "",
-  //       imageURL: game.imageURL || "",
-  //       description: game.description || "",
-  //     });
-  //   }
-  // }, [game]);
+  const emailOptions = developerEmails.map((email) => ({
+    value: email,
+    label: email,
+  }));
 
   return (
     <div className="p-6 bg-gray-900 min-h-screen  shadow-lg ">
@@ -136,23 +132,25 @@ export default function GameForm({ game }) {
             Developer Emails
           </label>
           <div className="flex items-center">
-            <select
-              id="developerEmail"
-              className="rounded-md p-2"
-              value={selectedDeveloper}
-              onChange={(e) => setSelectedDeveloper(e.target.value)}
-            >
-              <option value="">Select a developer</option>
-              {developerEmails.map((email, index) => (
-                <option key={index} value={email}>
-                  {email}
-                </option>
-              ))}
-            </select>
+            <Select
+              isLoading={developerLoading}
+              options={emailOptions}
+              onChange={(selectedOption) => {
+                const email = selectedOption ? selectedOption.value : "";
+                setSelectedDeveloper(email);
+              }}
+              value={
+                selectedDeveloper
+                  ? { value: selectedDeveloper, label: selectedDeveloper }
+                  : null
+              }
+              className="w-1/2"
+              isClearable
+            />
             <button
               type="button"
               onClick={handleAddDeveloper}
-              className="ml-2 p-2 bg-blue-500 text-white rounded-md"
+              className="ml-2 p-2 bg-gray-900 opacity-90 text-white rounded-md"
             >
               Add Developer
             </button>
@@ -194,7 +192,7 @@ export default function GameForm({ game }) {
         </p>
 
         <div className="flex justify-end space-x-4">
-        <button
+          <button
             type="button"
             onClick={cancelHandler}
             className="px-4 py-2 bg-gray-500 hover:bg-gray-600 rounded"
