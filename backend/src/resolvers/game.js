@@ -34,7 +34,6 @@ const gameCrud=
         {
             queryOptions.skip=1
             queryOptions.cursor={id:Number(cursor)}
-            console.log("Cursor:", cursor, );
 
         }
 

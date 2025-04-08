@@ -38,7 +38,7 @@ export default function Header() {
                   Developers
                 </NavLink>
               </li>
-              <li hidden={isToken?false:true}>
+              <li hidden={isToken ? false : true}>
                 <NavLink
                   to="/games"
                   className={({ isActive }) =>

@@ -1,10 +1,7 @@
 import DeveloperForm from "../components/DeveloperForm";
 
-
-
-export default function NewDeveloperPage()
-{
-return <DeveloperForm/>
+export default function NewDeveloperPage() {
+  return <DeveloperForm />;
 }
 
 // export async function action({ request }) {
@@ -20,6 +17,5 @@ return <DeveloperForm/>
 //       gameGenre: JSON.parse(data.get("game")).genre
 //     };
 //     return developerData
-    
+
 //   }
-  

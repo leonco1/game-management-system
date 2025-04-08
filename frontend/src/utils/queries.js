@@ -10,9 +10,9 @@ const DEVELOPER_EMAIL_QUERY = gql`
 
 
 const GET_ALL_DEVELOPERS_QUERY=gql`
-query getAllDevelopers
+query getAllDevelopers($offset:Int,$limit:Int)
 {
-  getAllDevelopers
+  getAllDevelopers(offset:$offset,limit:$limit)
   {
     id
     name

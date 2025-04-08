@@ -19,7 +19,7 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-const Login = ({setUserToken}) => {
+const Login = ({ setUserToken }) => {
   const navigate = useNavigate();
   const [formState, setFormState] = useState({
     login: true,
@@ -35,7 +35,7 @@ const Login = ({setUserToken}) => {
     },
     onCompleted: ({ login }) => {
       localStorage.setItem(AUTH_TOKEN, login.token);
-        setUserToken(login.token )
+      setUserToken(login.token);
       navigate("/");
     },
   });
@@ -48,7 +48,7 @@ const Login = ({setUserToken}) => {
     },
     onCompleted: ({ signup }) => {
       localStorage.setItem(AUTH_TOKEN, signup.token);
-      setUserToken(signup.token)
+      setUserToken(signup.token);
       navigate("/");
     },
   });

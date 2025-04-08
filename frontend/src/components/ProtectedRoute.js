@@ -1,11 +1,10 @@
 import { Navigate } from "react-router";
 const ProtectedRoute = ({ user, children }) => {
-    if (!user) {
-      return <Navigate to="/" replace />;
-    }
-    
-    return children;
-  };
+  if (!user) {
+    return <Navigate to="/" replace />;
+  }
 
-  export default ProtectedRoute
-  
+  return children;
+};
+
+export default ProtectedRoute;

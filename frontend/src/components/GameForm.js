@@ -10,7 +10,7 @@ import {
   GET_ALL_GAMES_QUERY,
 } from "../utils/queries.js";
 
-import Select from 'react-select'
+import Select from "react-select";
 export default function GameForm({ game }) {
   const navigate = useNavigate();
   const genre = game?.genres.map((genre) => genre.name).join(" ") || [];
@@ -26,7 +26,7 @@ export default function GameForm({ game }) {
     genreName: genre,
     imageURL: game?.imageURL || "",
   });
-  const { data,loading:developerLoading } = useQuery(DEVELOPER_EMAIL_QUERY);
+  const { data, loading: developerLoading } = useQuery(DEVELOPER_EMAIL_QUERY);
   const developerEmails =
     data?.getAllDevelopers.map((dev) => dev.userEmail) || [];
   const [createGame] = useMutation(CREATE_GAME_MUTATION, {

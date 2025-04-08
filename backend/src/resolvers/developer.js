@@ -2,14 +2,17 @@ import prisma from "./prismaClient/prisma.js";
 import User from "./user.js";
 
 const developerCrud = {
-    async getAllDevelopers() {
+    async getAllDevelopers(parent,args) {
+      const {offset,limit}=args
+      
         return await prisma.developer.findMany({include:{
           games:{
             include:{
               genres:true
             }
           }
-        }})
+        }, skip:offset, take:limit})
+
     },
 
     async getDeveloperById(id) {
