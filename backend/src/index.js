@@ -18,7 +18,9 @@ const resolvers={
         getDeveloperById:(parent,args,context,info)=>{
           return developerCrud.getDeveloperById(args.id)
         },
-        getAllGames:gameCrud.getAllGames,
+        getAllGames:(parent,args)=>{
+          return gameCrud.getAllGames(parent,args)
+        },
         getGameById:(parent,args,context,info)=>{
           return gameCrud.getGameById(args.id)
         },

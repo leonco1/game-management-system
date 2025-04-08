@@ -57,8 +57,8 @@ const GET_GAME_BY_ID_QUERY=gql`query getGameById($id:ID!)
 
 const GET_ALL_GAMES_QUERY=gql`
 
-query{
-    getAllGames{
+query($cursor:ID,$limit:Int){
+  getAllGames(cursor: $cursor, limit: $limit){
         id
         title
         imageURL

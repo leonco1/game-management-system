@@ -1,7 +1,7 @@
 type Query {
   getAllDevelopers: [Developer!]!           
   getDeveloperById(id: ID!): Developer     
-  getAllGames: [Game!]!                      
+  getAllGames(cursor:ID,limit:Int): [Game!]!                      
   getGameById(id: ID!): Game              
   getAllGenres: [Genre!]!                   
   getGenreById(id: ID!): Genre           

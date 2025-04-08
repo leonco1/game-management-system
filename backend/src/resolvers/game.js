@@ -22,9 +22,24 @@ async function getDeveloperIds(developerEmails)
 
 const gameCrud=
 {
-    async getAllGames()
+    async getAllGames(parent,args)
     {
-        return await prisma.game.findMany({include:{genres:true}})
+        const {cursor,limit}=args
+        const queryOptions={
+            include:{genres:true},
+            orderBy:{id:'asc'},
+            take:limit,
+        };
+        if(cursor)
+        {
+            queryOptions.skip=1
+            queryOptions.cursor={id:Number(cursor)}
+            console.log("Cursor:", cursor, );
+
+        }
+
+        const games= await prisma.game.findMany(queryOptions)
+        return games
     },
 
     async getGameById(id)
