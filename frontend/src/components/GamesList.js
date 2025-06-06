@@ -6,7 +6,6 @@ export default function GamesList({ games, fetchMore }) {
 
   const loadMore = async () => {
     const lastGame = games[games.length - 1];
-    console.log("Loading more after:", lastGame?.id);
     if (!lastGame) return;
 
     setIsLoadingMore(true);
@@ -17,9 +16,7 @@ export default function GamesList({ games, fetchMore }) {
           limit: 6,
         },
       });
-      console.log("Fetched more games:", data);
     } catch (err) {
-      console.error("Fetch more error:", err);
     } finally {
       setIsLoadingMore(false);
     }

@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "start": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -24,6 +25,6 @@
   },
   "prisma": {
     "schema": "src/prisma/schema.prisma",
-    "seed":"node src/prisma/seed.js"
+    "seed": "node src/prisma/seed.js"
   }
 }

@@ -24,36 +24,37 @@ async function getDeveloperIds(developerEmails) {
 
 async function main() {
 
-  // const genres = [
-  //   { name: "Action" },
-  //   { name: "Adventure" },
-  //   { name: "Shooter" },
-  //   { name: "Fighting" },
-  //   { name: "Horror" },
-  //   { name: "Puzzle" },
-  //   { name: "Platformer" },
-  //   { name: "Racing" },
-  //   { name: "Simulation" },
-  //   { name: "Strategy" },
-  //   { name: "Sports" },
-  //   { name: "MMORPG" },
-  //   { name: "Survival" },
-  //   { name: "Stealth" },
-  //   { name: "Rhythm" },
-  //   { name: "Open World" },
-  //   { name: "Metroidvania" },
-  //   { name: "Roguelike" },
-  //   { name: "Visual Novel" },
-  //   { name: "Hack and Slash" },
-  //   { name: "Tower Defense" },
-  //   { name: "RPG" } 
-  // ];
+  const genres = [
+    { name: "Action" },
+    { name: "Adventure" },
+    { name: "Shooter" },
+    { name: "Fighting" },
+    { name: "Horror" },
+    { name: "Puzzle" },
+    { name: "Platformer" },
+    { name: "Racing" },
+    { name: "Simulation" },
+    { name: "Strategy" },
+    { name: "Sports" },
+    { name: "MMORPG" },
+    { name: "Survival" },
+    { name: "Stealth" },
+    { name: "Rhythm" },
+    { name: "Open World" },
+    { name: "Metroidvania" },
+    { name: "Roguelike" },
+    { name: "Visual Novel" },
+    { name: "Hack and Slash" },
+    { name: "Tower Defense" },
+    { name: "RPG" } 
+  ];
 
-  // for (const genre of genres) {
-  //   await prisma.genre.create({
-  //     data: { name: genre.name }
-  //   });
-  // }
+  for (const genre of genres) {
+    const createdGenre= await prisma.genre.create({
+      data: { name: genre.name }
+    });
+    console.log(createdGenre)
+  }
 
   const games = [
     {

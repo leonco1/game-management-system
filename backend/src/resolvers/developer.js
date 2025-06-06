@@ -1,5 +1,4 @@
 import prisma from "./prismaClient/prisma.js";
-import User from "./user.js";
 
 const developerCrud = {
     async getAllDevelopers(parent,args) {
